@@ -1,0 +1,17 @@
+{
+  "name": "dht-iot-vizualiser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": {
+    "name": "Etienne Villedieu",
+    "email": "etienne.villedieu@econocom.com",
+    "url": "http://etiennevilledieu.fr"
+  },
+  "dependencies": {
+    "dht-iot": "^1.0.0",
+    "request": "^2.83.0",
+    "express": "^4.16.2",
+    "body-parser": "^1.18.2"
+  }
+}
