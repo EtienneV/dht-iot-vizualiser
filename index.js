@@ -56,6 +56,7 @@ io.on('connection', function(socket){
 
 
   dht_iot.on('get_nodes', function (nodes) {
+    console.log("Nodes : ")
     console.log(nodes)
 
     for(var i = 0; i < nodes.length; i++){
