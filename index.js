@@ -54,19 +54,6 @@ io.on('connection', function(socket){
   	});
   })
 
-  /*dht_instance.events.on('get_peer', function (message, node) {
-    //console.log(node)
-
-    geoip(node.address).then(function (res){
-
-      console.log(res.lat+", "+res.lon)
-
-      socket.emit('new_node', {
-        long: res.lon,
-        lat: res.lat
-      });
-    })
-  })*/
 
   dht_iot.on('get_nodes', function (nodes) {
     console.log(nodes)
