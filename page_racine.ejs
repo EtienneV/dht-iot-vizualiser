@@ -131,23 +131,17 @@
 		socket.on('new_temp', function(msg){
 			console.log(msg.time+" : "+msg.temp);
 			myChart.data.datasets.forEach((dataset) => {
-				if (Date.now()/1000 - msg.time <= 20)
-				{
-					dataset.data.push({
-						x: msg.time * 1000,
-						y: msg.temp
-					});
-				}
+				dataset.data.push({
+					x: msg.time * 1000,
+					y: msg.temp
+				});
 			});
 			myChart.update();
 			mylatence.data.datasets.forEach((dataset) => {
-				if (Date.now()/1000 - msg.time <= 20)
-				{
-					dataset.data.push({
-						x: msg.time * 1000,
-						y: (Date.now()/1000 - msg.time)
-					});
-				}
+				dataset.data.push({
+					x: msg.time * 1000,
+					y: (Date.now()/1000 - msg.time)
+				});
 			});
 			mylatence.update();
 		//Mise à jour du deuxième graphe
