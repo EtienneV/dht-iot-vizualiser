@@ -31,7 +31,7 @@ var server = app.listen(app.get('port'), function() {
 var io = require('socket.io').listen(server);
 
 var lat;
-var lasttime;
+var lasttime = 0;
 
 /**
 * Routes
@@ -49,7 +49,6 @@ io.on('connection', function(socket){
 
   dht_iot.on('new_value', function (hash, data) {
     lat = 0;
-    lasttime = 0;
     console.log(data.value+" - "+data.timestamp)
     if ((Date.now()/1000 - data.timestamp <= 60) && (data.timestamp > lasttime))
     {
