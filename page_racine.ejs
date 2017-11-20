@@ -226,8 +226,6 @@
 			socket.on('new_node', function(msg){
 			//console.log("new_node"+msg.has_value)
 			console.log(msg.long+", "+msg.lat)
-			if (Date.now()/1000 - msg.time <= 20)
-			{
 
 			/*geo_nodes.features.push({
 		            type: 'Feature',
@@ -266,8 +264,7 @@
 		        });
 				map.getSource('nodes_noInfo').setData(geo_noInfo);
 			}
-		}
-	})
+		})
 })
 
 
