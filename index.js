@@ -78,7 +78,7 @@ io.on('connection', function(socket){
         //var distance = distance(message.r.id.toString('hex'), infoHash)
 
         //console.log(distance)
-        if (lat = 1)
+        if (lat == 1)
         {
           socket.emit('new_node', {
             long: res.geo.lon,
