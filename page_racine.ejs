@@ -80,31 +80,31 @@
 	    }
 	});
 
-	var mylatence;
+		var mylatence;
 
-	var img = new Image();
-	img.src = 'https://www.paillettes.fr/464/5-kg-paillettes-arc-en-ciel-400.jpg';
+		var img = new Image();
+		img.src = 'https://www.paillettes.fr/464/5-kg-paillettes-arc-en-ciel-400.jpg';
 
-	img.onload = function() {
-	    var ctx2 = document.getElementById("latence").getContext('2d');
-	    var fillPattern = ctx.createPattern(img, 'repeat');
+		img.onload = function() {
+			var ctx2 = document.getElementById("latence").getContext('2d');
+			var fillPattern = ctx.createPattern(img, 'repeat');
 
-	    mylatence = new Chart(ctx2, {
-			type: 'line',
-			data: {
-				datasets: [{
-					label: 'Latence',
-					data: [],
-					backgroundColor: [
-					'rgba(70, 220, 30, 0.2)',
-					'rgba(153, 102, 255, 0.2)',
-					'rgba(255, 159, 64, 0.2)'
-					],
-					borderColor: [
-					'rgba(70, 220, 30, 1)',
-					'rgba(153, 102, 255, 1)',
-					'rgba(255, 159, 64, 1)'
-					]
+			mylatence = new Chart(ctx2, {
+				type: 'line',
+				data: {
+					datasets: [{
+						label: 'Latence',
+						data: [],
+						backgroundColor: [
+						'rgba(70, 220, 30, 0.2)',
+						'rgba(153, 102, 255, 0.2)',
+						'rgba(255, 159, 64, 0.2)'
+						],
+						borderColor: [
+						'rgba(70, 220, 30, 1)',
+						'rgba(153, 102, 255, 1)',
+						'rgba(255, 159, 64, 1)'
+						]
 					// backgroundColor: fillPattern
 				}]
 			},
@@ -122,28 +122,31 @@
 				elements: {
 					line: {
 	                	tension: 0, // disables bezier curves
-		            }
-		        }
-		    }
-		});
-	}
+	                }
+	            }
+	        }
+	    });
+		}
 
-	socket.on('new_temp', function(msg){
-		console.log(msg.time+" : "+msg.temp);
-		myChart.data.datasets.forEach((dataset) => {
-			dataset.data.push({
-				x: msg.time * 1000,
-				y: msg.temp
+		socket.on('new_temp', function(msg){
+			console.log(msg.time+" : "+msg.temp);
+			myChart.data.datasets.forEach((dataset) => {
+				dataset.data.push({
+					x: msg.time * 1000,
+					y: msg.temp
+				});
 			});
-		});
-		myChart.update();
-		mylatence.data.datasets.forEach((dataset) => {
-			dataset.data.push({
-				x: msg.time * 1000,
-				y: (Date.now()/1000 - msg.time)
+			myChart.update();
+			mylatence.data.datasets.forEach((dataset) => {
+				dataset.data.push({
+					if (Date.now()/1000 - msg.time <= 60)
+					{
+						x: msg.time * 1000,
+						y: (Date.now()/1000 - msg.time)
+					}
+				});
 			});
-		});
-		mylatence.update();
+			mylatence.update();
 		//Mise à jour du deuxième graphe
 	});
 
@@ -154,58 +157,58 @@
 
 
 
-	mapboxgl.accessToken = 'pk.eyJ1IjoiY2hpcHNvbmR1bGVlIiwiYSI6ImQzM2UzYmQxZTFjNjczZWMyY2VlMzQ5NmM2MzEzYWRmIn0.0iPy8Qyw2FjGSxawGZxW8A';
-	var map = new mapboxgl.Map({
-		container: 'map',
-		style: 'mapbox://styles/mapbox/dark-v9'
-	});
+		mapboxgl.accessToken = 'pk.eyJ1IjoiY2hpcHNvbmR1bGVlIiwiYSI6ImQzM2UzYmQxZTFjNjczZWMyY2VlMzQ5NmM2MzEzYWRmIn0.0iPy8Qyw2FjGSxawGZxW8A';
+		var map = new mapboxgl.Map({
+			container: 'map',
+			style: 'mapbox://styles/mapbox/dark-v9'
+		});
 
-	var geo_nodes = {
-            "type": "FeatureCollection",
-            "features": []
-        };
+		var geo_nodes = {
+			"type": "FeatureCollection",
+			"features": []
+		};
 
-    var geo_hasInfo = {
-            "type": "FeatureCollection",
-            "features": []
-        };
+		var geo_hasInfo = {
+			"type": "FeatureCollection",
+			"features": []
+		};
 
-    var geo_noInfo = {
-            "type": "FeatureCollection",
-            "features": []
-        };
+		var geo_noInfo = {
+			"type": "FeatureCollection",
+			"features": []
+		};
 
-	map.on('load', function() {
+		map.on('load', function() {
 
-		map.addSource('nodes', { type: 'geojson', data: geo_nodes});
-		map.addLayer({
-	            "id": "nodes",
-	            "source": "nodes",
-	            "type": "circle",
-		        "paint": {
-		            "circle-radius": 2,
-		            "circle-color": "#e55e5e"
-		        }
-	        });
+			map.addSource('nodes', { type: 'geojson', data: geo_nodes});
+			map.addLayer({
+				"id": "nodes",
+				"source": "nodes",
+				"type": "circle",
+				"paint": {
+					"circle-radius": 2,
+					"circle-color": "#e55e5e"
+				}
+			});
 
-		map.addSource('nodes_hasInfo', { type: 'geojson', data: geo_hasInfo});
-		map.addLayer({
-	            "id": "nodes_hasInfo",
-	            "source": "nodes_hasInfo",
-	            "type": "circle",
-		        "paint": {
-		            "circle-radius": 4,
-		            "circle-color": "#e55e5e"
-		        }
-	        });
+			map.addSource('nodes_hasInfo', { type: 'geojson', data: geo_hasInfo});
+			map.addLayer({
+				"id": "nodes_hasInfo",
+				"source": "nodes_hasInfo",
+				"type": "circle",
+				"paint": {
+					"circle-radius": 4,
+					"circle-color": "#e55e5e"
+				}
+			});
 
-		map.addSource('nodes_noInfo', { type: 'geojson', data: geo_noInfo});
-		map.addLayer({
-	            "id": "nodes_noInfo",
-	            "source": "nodes_noInfo",
-	            "type": "circle",
-		        "paint": {
-		            "circle-radius": 2,
+			map.addSource('nodes_noInfo', { type: 'geojson', data: geo_noInfo});
+			map.addLayer({
+				"id": "nodes_noInfo",
+				"source": "nodes_noInfo",
+				"type": "circle",
+				"paint": {
+					"circle-radius": 2,
 		            "circle-color": "#007cbf"/*,
 		            'circle-radius': {
 						property: 'distance',
@@ -214,10 +217,10 @@
 							[100000, 1]
 						]
 					}*/
-		        }
-	        });
+				}
+			});
 
-		socket.on('new_node', function(msg){
+			socket.on('new_node', function(msg){
 			//console.log("new_node"+msg.has_value)
 			console.log(msg.long+", "+msg.lat)
 
@@ -234,36 +237,36 @@
 
 			if(msg.has_value){
 				geo_hasInfo.features.push({
-		            type: 'Feature',
-		            geometry: {
-		                type: 'Point',
-		                coordinates: [msg.long, msg.lat]
-		            },
-		            properties: {
+					type: 'Feature',
+					geometry: {
+						type: 'Point',
+						coordinates: [msg.long, msg.lat]
+					},
+					properties: {
 		            	//distance: msg.distance
 		            }
 		        });
-		        map.getSource('nodes_hasInfo').setData(geo_hasInfo);
+				map.getSource('nodes_hasInfo').setData(geo_hasInfo);
 			}
 			else {
 				geo_noInfo.features.push({
-		            type: 'Feature',
-		            geometry: {
-		                type: 'Point',
-		                coordinates: [msg.long, msg.lat]
-		            },
-		            properties: {
+					type: 'Feature',
+					geometry: {
+						type: 'Point',
+						coordinates: [msg.long, msg.lat]
+					},
+					properties: {
 		            	//distance: msg.distance
 		            }
 		        });
-		        map.getSource('nodes_noInfo').setData(geo_noInfo);
+				map.getSource('nodes_noInfo').setData(geo_noInfo);
 			}
 		})
-	})
+})
 
 
-	
 
-	</script>
+
+</script>
 </body>
 </html>
