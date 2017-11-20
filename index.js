@@ -50,7 +50,7 @@ io.on('connection', function(socket){
   dht_iot.on('new_value', function (hash, data) {
     lat = 0;
     console.log(data.value+" - "+data.timestamp)
-    if ((Date.now()/1000 - data.timestamp <= 60) && (data.timestamp > lasttime))
+    if ((Date.now()/1000 - data.timestamp <= 7200) && (data.timestamp > lasttime))
     {
      socket.emit('new_temp', {
       time: data.timestamp,
