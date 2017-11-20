@@ -144,6 +144,11 @@
 						x: msg.time * 1000,
 						y: (Date.now()/1000 - msg.time)
 					}
+					else
+					{
+						x: msg.time * 1000,
+						y: 1000;
+					}
 				});
 			});
 			mylatence.update();
